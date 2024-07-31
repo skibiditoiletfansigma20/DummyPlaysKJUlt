@@ -1,0 +1,50 @@
+    local char = workspace.Live:WaitForChild("Weakest Dummy")
+	local hum = char.Humanoid
+	local humRp = char.HumanoidRootPart
+
+    local soundSFX = Instance.new("Sound")
+    soundSFX.SoundId = "rbxassetid://18445228136"
+    soundSFX.Volume = 2
+    soundSFX.Name = "SFX"
+    soundSFX.Parent = char.Torso
+    soundSFX:Play()
+
+    local anim = Instance.new("Animation")
+    anim.AnimationId = "rbxassetid://18445236460"
+    hum.Animator:LoadAnimation(anim):Play()
+	
+	local boom = game.ReplicatedStorage.Resources.KJEffects["fine...Emit"]:Clone()
+	boom.Parent = workspace
+    boom.CanCollide = false
+	boom.CFrame = humRp.CFrame * CFrame.new(0,-0.65,0)
+
+    local boom2 = game.ReplicatedStorage.Resources.KJEffects["fine...Emit2"]:Clone()
+	boom2.Parent = workspace
+    boom2.CanCollide = false
+	boom2.CFrame = humRp.CFrame * CFrame.new(0,-0.65,0)
+
+    local weld = Instance.new("Weld")
+	weld.Parent = boom2
+	weld.Part0 = boom2
+	weld.Part1 = humRp
+	weld.C1 = CFrame.new(0,-0.65,0)
+	
+	local weld2 = Instance.new("Weld")
+	weld2.Parent = boom
+	weld2.Part0 = boom
+	weld2.Part1 = humRp
+	weld2.C1 = CFrame.new(0,-0.65,0)
+
+    delay(1.8, function()
+    for _,Particles in pairs(boom:GetDescendants()) do
+			if Particles:IsA("ParticleEmitter") then
+				Particles:Emit(Particles:GetAttribute("EmitCount"))
+			end
+		end
+
+        for _,Particles in pairs(boom2:GetDescendants()) do
+			if Particles:IsA("ParticleEmitter") then
+				Particles:Emit(Particles:GetAttribute("EmitCount"))
+			end
+		end
+    end)
